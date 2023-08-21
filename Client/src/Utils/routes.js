@@ -1,0 +1,9 @@
+export const Host = "http://localhost:8000";
+export const Signup = `${Host}/api/auth/register`;
+export const Signin = `${Host}/api/auth/login`;
+export const upload = `${Host}/api/upload`;
+export const update = `${Host}/api/auth/update/`;
+export const getAlluser = `${Host}/api/auth/allusers/`;
+export const getSingleuser = `${Host}/api/auth/singleuser/`;
+export const addMessage = `${Host}/api/messages/addmessage`;
+export const getallMessage = `${Host}/api/messages/getallmessage`;
