@@ -59,10 +59,10 @@ exports.Login = async (req, res, next) => {
     next(err);
   }
 };
-exports.updatePP = async (req, res,next) => {
+exports.updatePP = async (req, res, next) => {
   try {
-    const updatedUser = await User.findOneAndUpdate(
-      { username: req.params.username },
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
       {
         // profilePic:req
         $set: req.body,
@@ -75,21 +75,24 @@ exports.updatePP = async (req, res,next) => {
     next(err);
   }
 };
-exports.getAlluser=async(req,res,next)=>{
+exports.getAlluser = async (req, res, next) => {
   try {
-    const users=await User.find({_id:{$ne:req.params.id}}).select([
-      "username","email","profilePic","_id"
-    ])
+    const users = await User.find({ _id: { $ne: req.params.id } }).select([
+      "username",
+      "email",
+      "profilePic",
+      "_id",
+    ]);
     res.json(users);
   } catch (err) {
     next(err);
   }
-}
-exports.getSingleuser=async(req,res,next)=>{
+};
+exports.getSingleuser = async (req, res, next) => {
   try {
-    const user=await User.findOne({username:req.params.username});
+    const user = await User.findById(req.params.id);
     res.json(user);
   } catch (err) {
     next(err);
   }
-}
+};

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BiImageAdd } from "react-icons/bi";
 import logo from "../assets/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import { update, upload } from "../Utils/routes";
+import { getSingleuser, update, upload } from "../Utils/routes";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -10,12 +10,42 @@ import { useCookies } from "react-cookie";
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 const SetPP = () => {
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   const [cookies] = useCookies([]);
   const [values, setValues] = useState(location.state);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(user.profilePic);
+  const [newName, setnewName] = useState(user?.username);
   const navigate = useNavigate();
-  const {user}=useContext(AuthContext);
+  const [currentuser, setCurrentuser] = useState(undefined);
+  const preset_key = "ppe1wd2s";
+  useEffect(() => {
+    const fetchsingleuser = async () => {
+      if (!cookies.jwt) {
+        navigate("/login");
+      } else {
+        const res = await axios.get(getSingleuser + user?._id);
+        setFile(res.data.profilePic);
+        setnewName(res.data.username);
+      }
+    };
+    fetchsingleuser();
+  }, []);
+  const handleFile = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", preset_key);
+    axios
+      .post(`https://api.cloudinary.com/v1_1/daxshafbw/image/upload`, formData)
+      .then((res) => {
+        setFile(res.data.secure_url);
+      })
+      .catch((err) => {
+        return err;
+      });
+  };
+
   useEffect(() => {
     if (!cookies.jwt) {
       navigate("/login");
@@ -23,7 +53,7 @@ const SetPP = () => {
   }, [cookies, navigate]);
   const handleSkip = (e) => {
     e.preventDefault();
-    navigate("/",{state:values});
+    navigate("/", { state: values });
   };
   const toastOpt = {
     position: "bottom-right",
@@ -36,35 +66,27 @@ const SetPP = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (file == null) {
-      toast.error("Please Select required field", toastOpt);
-      return;
+    const updatedUser = {
+      username: user.username,
+      profilePic: user.profilePic,
+    };
+    if (file !== null) {
+      updatedUser.profilePic = file;
     }
-    const { username } = values;
-    const updatedUser = values;
-    if (file) {
-      const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
-      data.append("file", file);
-      updatedUser.profilePic = filename;
-      try {
-        await axios.post(upload, data);
-      } catch (err) {
-        toast.error("Failed to Set Profile Picture", toastOpt);
-      }
+    if (newName.length !== 0) {
+      updatedUser.username = newName;
     }
     try {
       await axios.put(
-        "http://localhost:8000/api/auth/update/" + user?.username,
+        "http://localhost:8000/api/auth/update/" + user?._id,
         updatedUser
       );
-      toast.success("Profile Pic Set Successfully", toastOpt);
+      toast.success("Profile Updated Successfully", toastOpt);
       setTimeout(() => {
-        navigate("/",{state:values});
+        navigate("/", { state: values });
       }, 2000);
     } catch (err) {
-      toast.error("Failed to Set Profile Picture", toastOpt);
+      toast.error("Failed to Update Profile", toastOpt);
     }
   };
   return (
@@ -78,7 +100,7 @@ const SetPP = () => {
           <div className="flex justify-center items-center gap-4">
             {file ? (
               <img
-                src={URL.createObjectURL(file)}
+                src={file}
                 alt=""
                 className=" h-[90px] w-[90px] rounded-[50%]"
               />
@@ -90,7 +112,7 @@ const SetPP = () => {
               />
             )}
             <h3 className=" font-normal text-xl  text-pink-500 ">
-              Set Your Profile Picture
+              Update Your Profile
             </h3>
           </div>
           <div className="flex flex-row gap-2 justify-center items-center py-6 px-10">
@@ -104,9 +126,17 @@ const SetPP = () => {
               className=" font-normal text-md w-full flex justify-center items-center"
               type="file"
               id="inputfile"
-              onChange={(e) => {
-                setFile(e.target.files[0]);
-              }}
+              onChange={handleFile}
+              // value={file}
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="Username"
+              className="bg-slate-600 h-10 w-full px-4 py-2 rounded-lg focus:outline-none  "
+              value={newName}
+              onChange={(e) => setnewName(e.target.value)}
             />
           </div>
           <div className="gap-3 flex">
@@ -121,7 +151,7 @@ const SetPP = () => {
               onClick={(e) => handleSkip(e)}
               className=" bg-pink-600  px-12 py-2 rounded-md border-[none] font-semibold hover:bg-pink-900"
             >
-              SKIP
+              BACK
             </button>
           </div>
         </form>

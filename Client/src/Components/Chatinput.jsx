@@ -31,12 +31,12 @@ const Chatinput = ({ handlesendmsg }) => {
   return (
     <div className="grid grid-cols-[8%_92%] items-center   ">
       {/* Button Container  */}
-      <div className="flex items-center text-gray-100 ml-3 ">
-        <div className=" relative flex gap-2">
-          <label htmlFor="inputfile">
+      <div className="flex items-center justify-center text-gray-100 ml-3 ">
+        <div className=" relative ">
+          {/* <label htmlFor="inputfile">
             <BiImageAdd className=" text-2xl text-pink-500 cursor-pointer" />
-          </label>
-          <input type="file" id="inputfile" className=" hidden " onChange={(e)=>selectFile(e)} />
+          </label> */}
+          {/* <input type="file" id="inputfile" className=" hidden " onChange={(e)=>selectFile(e)} /> */}
           <BsEmojiSmileFill
             className="text-[#ffff00c8] text-[1.3rem] cursor-pointer  "
             onClick={handleemojiPicker}
@@ -60,12 +60,12 @@ const Chatinput = ({ handlesendmsg }) => {
       </div>
       {/* form container  */}
       <form
-        className="w-[100%] flex items-center justify-between gap-4 bg-slate-500 rounded-md "
+        className="w-[100%] flex items-center justify-between gap-4 bg-slate-500 rounded-md  "
         onSubmit={(e) => sendChat(e)}
       >
         <input
           type="text"
-          className="w-[90%] h-[80%] border-none text-gray-100 text-lg focus:outline-none bg-transparent pl-4  py-2   "
+          className="w-[100%] h-[80%] border-none text-gray-100 text-lg focus:outline-none bg-transparent py-2 pl-2   "
           placeholder="Start Messaging..."
           value={msg}
           onChange={(e) => setMsg(e.target.value)}

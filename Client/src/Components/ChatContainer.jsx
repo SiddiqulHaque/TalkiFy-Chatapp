@@ -8,7 +8,7 @@ import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import { addMessage, getallMessage } from "../Utils/routes";
 import { v4 as uuidv4 } from "uuid";
-const chatContainer = ({ currentchat, logout, socket }) => {
+const chatContainer = ({ currentchat, logout, socket, ismobile }) => {
   const navigate = useNavigate();
   const [cookies, removeCookie] = useCookies([]);
   const { user } = useContext(AuthContext);
@@ -39,7 +39,7 @@ const chatContainer = ({ currentchat, logout, socket }) => {
       to: currentchat._id,
       message: msg,
     });
-  
+
     const msgs = [...messages];
     msgs.push({ fromSelf: true, message: msg });
     setMessages(msgs);
@@ -60,14 +60,14 @@ const chatContainer = ({ currentchat, logout, socket }) => {
     scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
   }, [messages]);
   return (
-    <div className="px-2 pt-2 grid grid-rows-[10%_78%_12%] overflow-hidden">
+    <div className={`${ismobile?'hidden':"px-2 pt-2 grid grid-rows-[10%_78%_12%] overflow-hidden"}`}>
       <div className="flex justify-between items-center pl-[1.5rem] bg-slate-600  py-2 rounded-md">
         <div className="flex items-center gap-4">
           <div>
             <img
               src={
                 currentchat.profilePic
-                  ? PF + currentchat.profilePic
+                  ? currentchat.profilePic
                   : "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
               }
               alt=""
