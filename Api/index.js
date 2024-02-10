@@ -30,14 +30,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
-app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://master--talkify1.netlify.app/"
-  );
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header(
+//     "Access-Control-Allow-Origin",
+//     "https://master--talkify1.netlify.app/"
+//   );
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 app.use("/images", express.static(path.join(__dirname, "/images")));
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
