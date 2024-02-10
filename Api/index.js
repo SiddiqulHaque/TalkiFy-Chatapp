@@ -8,7 +8,7 @@ const multer = require("multer");
 const userRoutes = require("./Routes/userRoutes");
 const messagesRoutes = require("./Routes/messagesRoutes");
 const path = require("path");
-const socket=require("socket.io");
+const socket = require("socket.io");
 dotenv.config();
 
 const connect = async () => {
@@ -30,6 +30,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://master--talkify1.netlify.app/"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 app.use("/images", express.static(path.join(__dirname, "/images")));
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,27 +53,27 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 });
 app.use("/api/auth", userRoutes);
 app.use("/api/messages", messagesRoutes);
-const server=app.listen(8000, (req, res) => {
+const server = app.listen(8000, (req, res) => {
   connect();
   console.log("Server is listening on port 8000");
 });
 
-const io=socket(server,{
-  cors:{
-    origin:"https://talkify-gjgz.onrender.com",
-    credentials:true,
+const io = socket(server, {
+  cors: {
+    origin: "https://talkify-gjgz.onrender.com",
+    credentials: true,
   },
-})
-global.onlineUsers=new Map();
-io.on("connection",(socket)=>{
-  global.chatSocket=socket;
-  socket.on("add-user",(userId)=>{
-    onlineUsers.set(userId,socket.id)
-  })
-  socket.on("send-msg",(data)=>{
-    const sendUserSocket=onlineUsers.get(data.to);
-    if(sendUserSocket){
-      socket.to(sendUserSocket).emit("msg-recieve",data.message);
+});
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-recieve", data.message);
     }
-  })
-})
+  });
+});

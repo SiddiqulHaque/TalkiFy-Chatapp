@@ -29,6 +29,8 @@ exports.Register = async (req, res, next) => {
     const token = createToken(newUser._id);
     newUser.password = undefined;
     res.cookie("jwt", token, {
+      secure:true,
+      sameSite:'None',
       withCredentials: true,
       httpOnly: false,
       maxAge: maxAge * 1000,
@@ -51,6 +53,8 @@ exports.Login = async (req, res, next) => {
     }
     const token = createToken(user._id);
     res.cookie("jwt", token, {
+      secure:true,
+      sameSite:'None',
       httpOnly: false,
       maxAge: maxAge * 1000,
     });
