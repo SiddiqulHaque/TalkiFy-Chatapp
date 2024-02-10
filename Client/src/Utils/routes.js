@@ -1,4 +1,4 @@
-export const Host = "http://localhost:8000";
+export const Host = "https://talkify-gjgz.onrender.com/";
 export const Signup = `${Host}/api/auth/register`;
 export const Signin = `${Host}/api/auth/login`;
 export const upload = `${Host}/api/upload`;
