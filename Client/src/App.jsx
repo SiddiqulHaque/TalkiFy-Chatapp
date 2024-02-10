@@ -2,9 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
-
 import Chat from "./Pages/Chat";
-import SetPP from "./Pages/setPP";
+import SetPP from "./Pages/SetPP";
 
 function App() {
   return (
