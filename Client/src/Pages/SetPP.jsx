@@ -17,8 +17,9 @@ const SetPP = () => {
   const [file, setFile] = useState(user.profilePic);
   const [newName, setnewName] = useState(user?.username);
   const navigate = useNavigate();
-  const [currentuser, setCurrentuser] = useState(undefined);
   const preset_key = "ppe1wd2s";
+  // const cloudname = process.env.REACT_APP_CLOUD_NAME;
+
   useEffect(() => {
     const fetchsingleuser = async () => {
       if (!cookies.jwt) {

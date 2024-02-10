@@ -53,8 +53,8 @@ const Register = () => {
       if (data.status == true) {
         // localStorage.setItem("token", JSON.stringify(data.token));
         dispatch({ type: "SIGNUP_SUCCESS", payload: data.newUser });
-        console.log(data);
-        navigate("/setpp", { state: values });
+        // console.log(data);
+        navigate("/", { state: values });
       }
     }
   };

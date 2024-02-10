@@ -9,10 +9,13 @@ const Welcome = ({ logout, ismobile }) => {
       className={`${
         ismobile
           ? "hidden"
-          : "flex justify-center items-center flex-col text-gray-200 "
+          : "flex justify-center items-center flex-col text-gray-200 relative "
       }`}
     >
+      <div className="absolute top-5 right-5">
       <Logout logout={logout}></Logout>
+      </div>
+      
       <img className="h-[10rem] w-[10rem] object-cover" src={welcome} alt="" />
       <h1 className="text-3xl font-semibold">
         WELCOME CHIEF,
