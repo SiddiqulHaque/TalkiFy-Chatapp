@@ -34,6 +34,7 @@ exports.Register = async (req, res, next) => {
       withCredentials: true,
       httpOnly: false,
       maxAge: maxAge * 1000,
+      domain: 'None'
     });
     res.json({ status: true, newUser });
   } catch (err) {
@@ -57,6 +58,7 @@ exports.Login = async (req, res, next) => {
       sameSite:'None',
       httpOnly: false,
       maxAge: maxAge * 1000,
+      domain: 'None'
     });
     res.json({ status: true, user });
   } catch (err) {
