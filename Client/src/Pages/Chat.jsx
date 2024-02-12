@@ -25,6 +25,7 @@ const Chat = () => {
     if (!cookies.jwt) {
       navigate("/login");
     }
+    console.log(cookies);
   }, [cookies, navigate]);
   useEffect(() => {
     const fetchsingleuser = async () => {
