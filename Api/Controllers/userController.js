@@ -32,7 +32,7 @@ exports.Register = async (req, res, next) => {
       secure:true,
       sameSite:'None',
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
       maxAge: maxAge * 1000,
       domain: 'https://master--talkify1.netlify.app'
     });
@@ -56,7 +56,7 @@ exports.Login = async (req, res, next) => {
     res.cookie("jwt", token, {
       secure:true,
       sameSite:'None',
-      httpOnly: false,
+      httpOnly: true,
       maxAge: maxAge * 1000,
       domain: 'https://master--talkify1.netlify.app'
     });
