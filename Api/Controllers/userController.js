@@ -34,7 +34,7 @@ exports.Register = async (req, res, next) => {
       withCredentials: true,
       httpOnly: false,
       maxAge: maxAge * 1000,
-      domain: 'https://master--talkify1.netlify.app'
+      // domain: 'https://master--talkify1.netlify.app'
       // domain: 'http://http://localhost:5173/'
     });
     res.json({ status: true, newUser });
@@ -59,7 +59,7 @@ exports.Login = async (req, res, next) => {
       sameSite:'lax',
       httpOnly: false,
       maxAge: maxAge * 1000,
-      domain: 'https://master--talkify1.netlify.app'
+      // domain: 'https://master--talkify1.netlify.app'
       // domain: 'http://http://localhost:5173'
     });
     res.json({ status: true, user });
