@@ -60,7 +60,8 @@ const server = app.listen(8000, (req, res) => {
 
 const io = socket(server, {
   cors: {
-    origin: "https://talkify-gjgz.onrender.com",
+    origin: "*",
+    // origin: "http://localhost:8000",
     credentials: true,
   },
 });

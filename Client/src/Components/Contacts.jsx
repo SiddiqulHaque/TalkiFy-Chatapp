@@ -103,7 +103,7 @@ const Contacts = ({ contacts, currentuser, changeChat, ismobile }) => {
           </div>
 
           {/* 4 */}
-          <div className="flex flex-col items-center overflow-auto gap-[0.5rem] h-full  ">
+          <div className="flex flex-col items-center overflow-auto gap-[0.5rem] h-full">
             {searchInput.length === 0 ? (
               <>
                 {contacts.length !== 0 &&
