@@ -30,11 +30,11 @@ exports.Register = async (req, res, next) => {
     newUser.password = undefined;
     res.cookie("jwt", token, {
       secure:true,
-      sameSite:'lax',
+      sameSite:'None',
       withCredentials: true,
       httpOnly: false,
       maxAge: maxAge * 1000,
-      // domain: 'https://master--talkify1.netlify.app'
+      domain: 'https://talkify1.netlify.app/'
       // domain: 'http://http://localhost:5173/'
     });
     res.json({ status: true, newUser });

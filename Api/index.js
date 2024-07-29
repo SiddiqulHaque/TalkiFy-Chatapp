@@ -23,7 +23,7 @@ const connect = async () => {
   }
 };
 const corsOptions = {
-  origin: true, //included origin as true
+  origin: ["http://localhost:5173", "https://talkify1.netlify.app/"], //included origin as true
   credentials: true, //included credentials as true
 };
 
