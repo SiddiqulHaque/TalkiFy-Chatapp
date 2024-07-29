@@ -34,7 +34,7 @@ const Contacts = ({ contacts, currentuser, changeChat, ismobile }) => {
           className={`${
             ismobile
               ? "left-0 grid grid-rows-[10%_10%_15%_75%] overflow-hidden w-full  "
-              : "left-[-100%] grid grid-rows-[10%_10%__15%_75%] overflow-hidden fixed md:static md:left-10"
+              : "left-[-100%] grid grid-rows-[10%_10%__15%_75%] overflow-hidden fixed md:static md:left-10 "
           }   `}
         >
           {/* 1 */}
@@ -103,7 +103,7 @@ const Contacts = ({ contacts, currentuser, changeChat, ismobile }) => {
           </div>
 
           {/* 4 */}
-          <div className="flex flex-col items-center overflow-auto gap-[0.5rem] h-full">
+          <div className="flex flex-col items-center overflow-y-auto gap-[0.5rem] h-[85%]">
             {searchInput.length === 0 ? (
               <>
                 {contacts.length !== 0 &&
