@@ -22,12 +22,24 @@ const connect = async () => {
     throw error;
   }
 };
-const corsOptions = {
-  origin: ["http://localhost:5173", "https://talkify1.netlify.app/"], //included origin as true
-  credentials: true, //included credentials as true
-};
+const allowedOrigins = [
+  'https://talkify1.netlify.app',
+  'http://localhost:5173' // Add any other allowed origins here
+];
 
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  if (req.method === 'OPTIONS') {
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+      return res.status(200).json({});
+  }
+  next();
+});
 app.use(cookieParser());
 app.use(express.json());
 // app.use((req, res, next) => {
